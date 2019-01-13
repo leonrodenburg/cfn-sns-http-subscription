@@ -1,8 +1,10 @@
 require('isomorphic-fetch')
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()
+const util = require('./util')
 
+const app = express()
+app.use(util.overrideContentType())
 app.use(bodyParser.json())
 
 let postCalls = 0
@@ -21,7 +23,8 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', async (req, res) => {
-  console.log(`Received data: ${JSON.stringify(req.body)}`)
+  console.log('Got POST call:')
+  console.log(req.body)
 
   postCalls++
   postBody = req.body
